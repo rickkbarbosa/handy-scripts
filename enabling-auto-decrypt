@@ -1,0 +1,15 @@
+#!/bin/bash
+
+USER="/home/rickk"
+
+sudo authconfig --enableecryptfs --updateall
+
+restorecon -R -v ${USER}
+semanage fcontext -a -e /home /home/.ecryptfs
+restorecon -R -v /home/.ecryptfs/rickk
+setsebool -P use_ecryptfs_home_dirs 1
+restorecon -R -v /home
+
+ecryptfs-insert-wrapped-passphrase-into-keyring ${USER}/.ecryptfs/wrapped-passphrase
+ecryptfs-mount-private
+ecryptfs-umount-private
