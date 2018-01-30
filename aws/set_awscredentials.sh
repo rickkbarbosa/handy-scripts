@@ -1,4 +1,21 @@
 #!/bin/bash
+#===============================================================================
+# IDENTIFICATION DIVISION
+#        ID SVN:   $Id$
+#          FILE:  set_awscredentials.sh 
+#         USAGE:  $0
+#   DESCRIPTION:  Replaces AWS Keys on several files at once and exports variables for general purpose
+#       OPTIONS:  --- 
+#  REQUIREMENTS:  --- 
+#          BUGS:  --- 
+#         NOTES:  Developed to be evocated by a .env script (append it as ". /where-is/set_awscredentials.sh" in order to export variables correctly)
+#          TODO:  --- 
+#        AUTHOR:  Rickk Barbosa 
+#       COMPANY:  ---
+#       VERSION:  1.0 
+#       CREATED:  2018-01-30 16:18 BRT
+#      REVISION:  --- 
+#=============================================================================== 
 
 #Getting home directory
 HOMEDIR=$(eval echo "~$(whoami ;)")
