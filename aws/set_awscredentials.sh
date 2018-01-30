@@ -42,4 +42,8 @@ echo "secret_key = ${AWS_ACCESS_SECRET_KEY}" >> $AWS_S3CMD_FILE
 #Setting global variables 
 export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY}"
 export AWS_SECRET_ACCESS_KEY="${AWS_ACCESS_SECRET_KEY}"
-#export AWS_DEFAULT_REGION=$AWS_REGION
+
+if [[ -z $AWS_REGION ]]; then
+	export AWS_REGION="us-east-1"
+fi
+export AWS_DEFAULT_REGION=${AWS_REGION}
