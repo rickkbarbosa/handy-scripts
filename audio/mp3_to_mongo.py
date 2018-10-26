@@ -26,7 +26,7 @@ from ID3 import *
 from pymongo import *
 
 mp3_files_pattern = Match(filetype='f', name='*.mp3')
-found_files = find_files(path='/home/rickk/Music', match=mp3_files_pattern)
+found_files = find_files(path='/root/Music', match=mp3_files_pattern)
 
 conn = MongoClient(host="mongodbR")
 music = conn.music
