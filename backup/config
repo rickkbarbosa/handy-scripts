@@ -1,0 +1,30 @@
+## Adv_Backup ConfigFile ###
+### Ricardo Barbosa - 20121217 ###
+
+BKP_STORAGE_DIR="/archive/backup/"
+BKP_FILENAME=$(hostname;)
+PRUNNING_PERIOD="10"
+### DIRECTORIES FOR BACKUP ### 
+	#Some Directories
+    FILE[1]=/etc/{apt,apache2,php,varnish}
+	#Another Directories
+    FILE[2]=/var/www/html
+	#Cronjobs
+	FILE[3]=/etc/cron*
+	FILE[4]=/var/spool/cron/crontabs
+
+### DATABASE BACKUP CONFIG ###
+DBUSER="user"
+DBPASSWORD="S3cret"
+DBNAMES="dadtabase_name database2_name"
+DBCOMPRESS="gzip"
+################################
+
+### OTHER PARAMETERS ####
+MAILADM="mail@some.com"
+LOGFILE="/var/log/your_backup.log"
+
+AdvPrint()
+{
+    echo "$(date '+[%m-%d-%Y %H:%M:%S]') - $*"
+}
