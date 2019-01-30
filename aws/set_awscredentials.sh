@@ -23,6 +23,7 @@ HOMEDIR=$(eval echo "~$(whoami ;)")
 #Setting variables
 AWS_CREDENTIALS_FILE="${HOMEDIR}/.aws/credentials"
 AWS_S3CMD_FILE="${HOMEDIR}/.s3cfg"
+AWS_CLI_FILE="${HOMEDIR}/.aws/config"
 
 #Starting script
 echo Ativando ambiente $(echo ${PWD##*/};)
@@ -47,3 +48,5 @@ if [[ -z $AWS_REGION ]]; then
 	export AWS_REGION="us-east-1"
 fi
 export AWS_DEFAULT_REGION=${AWS_REGION}
+
+sed -i "s/^region.*/region=${AWS_REGION,,}/g" "${AWS_CLI_FILE}"
