@@ -1,0 +1,2 @@
+ #Opensatck nova examples
+ nova boot --flavor=xlarge.32GB --image=Ubuntu-Server-14.04 --availability-zone nova --nic net-id=aaaabbbc-1234-5678-9AAB-Accccdderdbe --key-name ssh-keyname --security-groups default postgresql-1.prod
