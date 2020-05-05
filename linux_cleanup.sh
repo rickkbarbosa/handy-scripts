@@ -8,7 +8,7 @@
 } || {
     #When Debian
     apt autoremove -y
-    sudo apt-get clean
+    apt-get clean
     apt autoclean
 }
 
