@@ -34,11 +34,7 @@ dump_origin(){
     DB_HOST="${DB_CREDENTIALS[0]}"
     DB_NAME="${DB_CREDENTIALS[1]}"
     DB_USER="${DB_CREDENTIALS[2]}"
-    DB_PASS="${DB_CREDENTIALS[3]}"
-
-
-    #Dump tables from ORIGIN
-    export PGPASSWORD="${DB_PASS}"
+    PGPASSWORD="${DB_CREDENTIALS[3]}"
 
     #Extracting selected tables
     for TABLE in $TABLES; do
@@ -50,37 +46,37 @@ dump_origin(){
         sed -i '/^CREATE\ INDEX/d' "${TMPDIR}/${TABLE}.sql"
         ex -sc '1i|SET session_replication_role = replica;' -cx "${TMPDIR}/${TABLE}.sql"
     done
+
+    unset DB_HOST DB_NAME DB_USER PGPASSWORD
 }
 
-backup(){
-    #Now working on Destiny
+
+psql_destiny_credentials(){
     IFS=': ' read -r -a DB_CREDENTIALS <<< "${DATA_DESTINY}"
 
     #Getting credentials
-    DB_HOST="${DB_CREDENTIALS[0]}"
-    DB_NAME="${DB_CREDENTIALS[1]}"
-    DB_USER="${DB_CREDENTIALS[2]}"
-    DB_PASS="${DB_CREDENTIALS[3]}"
+    export DB_HOST="${DB_CREDENTIALS[0]}"
+    export DB_NAME="${DB_CREDENTIALS[1]}"
+    export DB_USER="${DB_CREDENTIALS[2]}"
+    export PGPASSWORD="${DB_CREDENTIALS[3]}"
+}
 
-    #Restoring them on destiny
-    export PGPASSWORD="${PWD_DESTINY}"
-
+backup(){
     #Perform a full backup
+    psql_destiny_credentials
     pg_dump -h ${DB_HOST} -U ${DB_USER} -C ${DB_NAME} > "${BACKUPDIR}/${DB_NAME}_FULL_${DATE}.sql"
 }
 
 send_to_destiny(){
-    #Now working on Destiny
-    IFS=': ' read -r -a DB_CREDENTIALS <<< "${DATA_DESTINY}"
+    #Perform a full backup
+    psql_destiny_credentials
 
-    #Getting credentials
+    #Gathering credentials
+    IFS=': ' read -r -a DB_CREDENTIALS <<< "${DATA_DESTINY}"
     DB_HOST="${DB_CREDENTIALS[0]}"
     DB_NAME="${DB_CREDENTIALS[1]}"
     DB_USER="${DB_CREDENTIALS[2]}"
-    DB_PASS="${DB_CREDENTIALS[3]}"
-
-    #Restoring them on destiny
-    export PGPASSWORD="${PWD_DESTINY}"
+    PGPASSWORD="${DB_CREDENTIALS[3]}"
 
     psql -h ${DB_HOST} -U ${DB_USER} --dbname="${DB_NAME}" --command="SET session_replication_role = replica;"
 
@@ -91,6 +87,8 @@ send_to_destiny(){
 
     #Re-Enabling right replication role
     psql -h ${DB_HOST} -U ${DB_USER} --dbname="${DB_NAME}" --command="SET session_replication_role = DEFAULT;"
+
+    unset DB_HOST DB_NAME DB_USER PGPASSWORD
 }
 
 main(){
