@@ -27,6 +27,7 @@ TABLES="table1
 table2
 table3"
 
+
 dump_origin(){
     IFS=': ' read -r -a DB_CREDENTIALS <<< "${DATA_ORIGIN}"
 
@@ -64,7 +65,9 @@ psql_destiny_credentials(){
 backup(){
     #Perform a full backup
     psql_destiny_credentials
+    echo "Performing backup for database ${DB_NAME} [ ${DB_HOST} ] ..."
     pg_dump -h ${DB_HOST} -U ${DB_USER} -C ${DB_NAME} > "${BACKUPDIR}/${DB_NAME}_FULL_${DATE}.sql"
+    echo "done"
 }
 
 send_to_destiny(){
