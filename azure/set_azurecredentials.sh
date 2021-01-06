@@ -2,11 +2,11 @@
 #===============================================================================
 # IDENTIFICATION DIVISION
 #        ID SVN:   $Id$
-#          FILE:  set_azscredentials.sh 
+#          FILE:  set_azurecredentials.sh 
 #         USAGE:  $0
 #   DESCRIPTION:  Set default credentials to AZ Cli
 #       OPTIONS:  --- 
-#  REQUIREMENTS:  --- 
+#  REQUIREMENTS:  az cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) 
 #          BUGS:  --- 
 #         NOTES:  Developed to be evocated by a .env script (append it as ". /where-is/set_awscredentials.sh" in order to export variables correctly)
 #          TODO:  --- 
