@@ -38,7 +38,7 @@ if [[ $# -eq 0 ]];  then
          az account set --subscription <SubscriptionId>
     "
 
-    az account list --output table
+    az account list --output table --all
 fi
 
 #AZ Devops
