@@ -24,8 +24,11 @@ HOMEDIR=$(eval echo "~$(whoami ;)")
 echo Ativando ambiente $(echo ${PWD##*/};)
 
 #Set Credentials
-az login -u "${AZURE_USER}" -p "${AZURE_PASSWORD}" 2>/dev/null
+if [[ -z $AZURE_PASSWORD ]]; then
+    read -sp "Please type your Azure password: " AZURE_PASSWORD
+fi
 
+az login -u "${AZURE_USER}" -p "${AZURE_PASSWORD}" 2>/dev/null
 
 #List All attached subscriptions
 if [[ $# -eq 0 ]];  then
