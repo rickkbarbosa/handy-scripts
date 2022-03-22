@@ -1,4 +1,5 @@
 #!/bin/bash
+#IRPF - Declaração do Imposto de Renda [Brazil] installation. Java installed is previously needed.
 
 YEAR=$(date +"%Y";)
 IRPF_VERSION="1.1"
