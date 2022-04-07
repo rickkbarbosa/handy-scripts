@@ -18,3 +18,15 @@ This lambda could be scheduled to seek non-tagged Network interfaces and Volumes
 - Create a Lambda function based on python. Just do a copy-paste from `lambda.py`
 - Don't forget to attach the previous IAM role to this new function.
 - If you want to run this script periodically, create a schedule after deploy it.
+
+
+### One-time script
+
+- Use the script `ec2-objectstagging.py`. Same script, just export your AWS variables on environment.
+
+``` 
+export AWS_REGION="your-region"
+export AWS_ACCESS_KEY="AAAAbbbcccCDDDD123456"
+export AWS_ACCESS_SECRET_KEY="ab/123456AABBCCDDEE"
+python3 ec2-objectstagging.py
+```
