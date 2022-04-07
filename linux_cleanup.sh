@@ -17,6 +17,8 @@
 if [[ -f $(which docker;) ]]; then 
     docker volume ls -q  | xargs docker volume rm
     docker rmi -f $(docker volume ls -qf dangling=true)
+    docker ps -aq | xargs docker rm --volumes
+    docker images -aq | xargs docker volume rmi
 fi
 
 #Running Logrotate if exists
