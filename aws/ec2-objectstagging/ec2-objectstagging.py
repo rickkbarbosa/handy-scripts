@@ -2,6 +2,7 @@
 import os
 import sys
 import boto3
+from requests import NullHandler
 
 region = os.environ['AWS_REGION']
 access_key = os.environ['AWS_ACCESS_KEY']
@@ -42,7 +43,12 @@ for i in range(0, len(instances_list) ):
     for n in range(0, len(interfaces)):
         instance_interfaces.append(interfaces[n]['NetworkInterfaceId'])
 
-    instances_tags = instances_list[i]['Instances'][0]['Tags']
+    try:
+        instances_tags = instances_list[i]['Instances'][0]['Tags']
+    except:
+        instance_tags = None
+        continue
+
     
     ''' Get a Name in the Tag Universe '''
     instance_name = list(filter(lambda name: name['Key'] == 'Name', instances_tags))
@@ -50,6 +56,5 @@ for i in range(0, len(instances_list) ):
     instance_associations = []
     instance_associations = instance_volumes + instance_interfaces
 
-    #response = c.create_tags(Resources=instance_associations, Tags=instances_tags)
-
+    response = c.create_tags(Resources=instance_associations, Tags=instances_tags)
     print("Instance: {} - ID: {} - Equipments: {} ".format(instance_name[0]['Value'], instance_id, instance_associations))
