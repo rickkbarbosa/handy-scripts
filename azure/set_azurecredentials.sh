@@ -28,7 +28,13 @@ if [[ -z $AZURE_PASSWORD ]]; then
     read -sp "Please type your Azure password: " AZURE_PASSWORD
 fi
 
-az login -u "${AZURE_USER}" -p "${AZURE_PASSWORD}" 2>/dev/null
+#If and TenantID has been declared, the login will use it.
+#If not, a single login will happen
+if [[ -z $AZURE_TENANT_ID ]]; then
+    az login -u "${AZURE_USER}" -p "${AZURE_PASSWORD}" 2>/dev/null
+else
+    az login --tenant ${AZURE_TENANT_ID} -u "${AZURE_USER}" -p "${AZURE_PASSWORD}" 2>/dev/null
+fi
 
 #List All attached subscriptions
 if [[ $# -eq 0 ]];  then
